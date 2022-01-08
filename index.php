@@ -4,48 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include "app/link.php"?>
+    <?php include "app/link.php";?>
     <link rel="stylesheet" href="css/style.css">
     <title>S$P 400</title>
 </head>
 <body>
-    <div class="align-middle root-section">
-        <div class="card">
-            <h2>Mohiuddin</h2>
-        </div>
-        <div class="card">
-            <form action="" class="row g-1">
-                <div class="col-md-6">
-                    <label class="form-label" for="firstName">First Name</label>
-                    <input class="form-control" type="text" id="firstName" placeholder="First name">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="lastName">Last Name</label>
-                    <input class="form-control" type="text" id="lastName" placeholder="Last Name">
-                </div>
-                <div class="col-md-12">
-                    <label class="form-label" for="email">Email</label>
-                    <input class="form-control" type="email" id="email" placeholder="example@email.com">
-                </div>
-                <br>
-                <div class="col-md-12">
-                    <label class="form-label" for="userName">User Name</label>
-                    <input class="form-control" type="text" id="userName" placeholder="@username">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label" for="dateOfBirth">Date Of Birth</label>
-                    <input class="form-control" type="date" id="dateOfBirth" placeholder="example@email.com">
-                </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="password">Password</label>
-                        <input class="form-control" type="password" id="password" placeholder="Password">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label" for="confPassword">Confirm Password</label>
-                        <input class="form-control" type="password" id="confPassword" placeholder="Confirm Password">
-                </div>
-            </form>
-        </div>
+    <div class="container">
+        <h2><a href="#">S<span class="and-logo">$</span>P <span class="logo">400</span></a></h2>
     </div>
+    <form action="login.php">
+    <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        
+
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" name="name" id="name" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+
+        <label for="psw-repeat"><b>Confirm Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+        <button type="submit" name="submit" class="registerbtn" onclick="return promptPassword()">Register</button>
+    </div>
+
+    <div class="container signin">
+        <p>Already have an account? <a href="login.php">Sign in</a>.</p>
+    </div>
+    </form>
 </body>
+<script src="javascript/scripr.js" crossorigin="anonymous"></script>
 </html>
+
+<?php
+include "admin/connectDB.php";
+if(isset($_POST['submit'])){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $role = "user";
+    $password = $_POST['psw'];
+    $confirm_password = $_POST['psw-repeat'];
+
+    if($password == $confirm_password){
+        $password = sha1($password);
+        $str = "INSERT INTO users(name, email, passwd,role) VALUES ('".$name."', '".$email."', '".$password."', '".$role."');";
+        echo $str;
+        mysqli_query($conn,$str);
+
+    }else{
+
+    }
+}
+
+?>
